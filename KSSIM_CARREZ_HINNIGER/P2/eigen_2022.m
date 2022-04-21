@@ -332,7 +332,7 @@ switch v
             if(flag3 == 1)
                 fprintf('subspace iteration v2 : pourcentage %0.3e non atteint avec %d valeurs propres\n', percentage, m);
             else
-                fprintf('subspace iteration v2 : convergence non atteinte: %d\n', it2)
+                fprintf('subspace iteration v2 : convergence non atteinte: %d\n', it3)
             end
             
             W = 0;

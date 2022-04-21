@@ -25,6 +25,7 @@ function [ W, V, n_ev, it, itv, flag ] = subspace_iter_v2( A, m, percentage, p, 
 
     % calcul de la norme de A (pour le critère de convergence d'un vecteur (gamma))
     normA = norm(A, 'fro');
+    p = ;
 
     % trace de A
     traceA = trace(A);

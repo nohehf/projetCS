@@ -55,12 +55,16 @@ function [ W, V, n_ev, it, itv, flag ] = subspace_iter_v2( A, m, percentage, p, 
         
         k = k+1;
         %% Y <- A*V
-        Y = A^p*Vr;
+        Vc = Vr(:, 1:nb_c);
+        Vnc = Vr(:, nb_c + 1 : end);
+        Y = [Vc, A^p*Vnc];
         %% orthogonalisation
         Vr = mgs(Y);
+        Vnc = mgs(Vr(:, nb_c + 1 : end));
         
         %% Projection de Rayleigh-Ritz
-        [Wr, Vr] = rayleigh_ritz_projection(A, Vr);
+        [Wr, Vnc] = rayleigh_ritz_projection(A, Vnc);
+        Vr = [Vr(:, 1:nb_c), Vnc];
         
         %% Quels vecteurs ont convergé à cette itération
         analyse_cvg_finie = 0;

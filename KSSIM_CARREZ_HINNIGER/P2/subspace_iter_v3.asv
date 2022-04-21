@@ -55,6 +55,8 @@ function [ W, V, n_ev, it, itv, flag ] = subspace_iter_v2( A, m, percentage, p, 
         
         k = k+1;
         %% Y <- A*V
+        Vc = Vr(:, 1:nb_c);
+        Vnc = V
         Y = A^p*Vr;
         %% orthogonalisation
         Vr = mgs(Y);
