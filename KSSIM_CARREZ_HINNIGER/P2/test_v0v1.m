@@ -36,7 +36,7 @@ m = 20;
 v = 1; % subspace iteration v1
 
 % taille du sous-espace (V1, v2, v3)
-m = 20;
+m = 47;
 
 % pourcentage de la trace que l'on veut atteindre (v1, v2, v3)
 percentage = .4;
