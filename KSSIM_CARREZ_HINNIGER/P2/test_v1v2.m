@@ -28,12 +28,12 @@ genere = 1;
 v = 2; % subspace iteration v1
 
 % taille du sous-espace (V1, v2, v3)
-m = 23;
+m = 46;
 
 % pourcentage de la trace que l'on veut atteindre (v1, v2, v3)
-percentage = .2;
+percentage = .4;
 
-[W, V, flag] = eigen_2022(imat, n, v, m, eps, maxit, percentage, 47, genere); %limite p == 92 VP*2
+[W, V, flag] = eigen_2022(imat, n, v, m, eps, maxit, percentage, 80, genere); %limite p == 92 VP*2
 
 % méthode de calcul
 v = 2; % subspace iteration v1

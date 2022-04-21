@@ -1,0 +1,45 @@
+close all;
+clear;
+
+% M1 = rand(10);
+% M2 = rand(100);
+% M3 = rand(250);
+% 
+% S1 = M1 + M1';
+% S2 = M2 + M2';
+% S3 = M3 + M3';
+
+% N = 6;
+n = 100;
+m = 46;
+% tolérance
+eps = 1e-8;
+% nombre d'itérations max pour atteindre la convergence
+maxit = 10000;
+percentage = .4;
+p = 72;
+genere = 1;
+
+methods = [0 1 2 3 10 11 12];
+temps = zeros(4, length(methods));
+
+
+for imat = 1:4
+    i = 1;
+    for v = methods
+        
+        [~, ~, ~, t_v] = eigen_2022Modifie(imat, n, v, m, eps, maxit, percentage, p, genere);
+        temps(imat,i) = t_v;
+        i = i + 1;
+    end
+
+
+end
+
+figure;
+hold on
+plot(temps(1,:));
+plot(temps(2,:));
+plot(temps(3,:));
+plot(temps(4,:));
+

@@ -21,7 +21,7 @@
     %  flag = 1  : on converge en ayant atteint la taille maximale de l'espace
     %  flag = -3 : on n'a pas convergé en maxit itérations
 
-function [ W, V, n_ev, it, itv, flag ] = subspace_iter_v2( A, m, percentage, p, eps, maxit )
+function [ W, V, n_ev, it, itv, flag ] = subspace_iter_v3( A, m, percentage, p, eps, maxit )
 
     % calcul de la norme de A (pour le critère de convergence d'un vecteur (gamma))
     normA = norm(A, 'fro');
@@ -49,21 +49,23 @@ function [ W, V, n_ev, it, itv, flag ] = subspace_iter_v2( A, m, percentage, p, 
     % on génère un ensemble initial de m vecteurs orthogonaux
     Vr = randn(n, m);
     Vr = mgs(Vr);
-    Wr = zeros(m,1);
+    Wr = zeros(m, 1);
 
     % rappel : conv = (eigsum >= trace) | (nb_c == m)
     while (~conv & k < maxit),
         
         k = k+1;
-        %% Y <- A*V
-        Vc = Vr(:, 1:nb_c);
-        Vnc = A^p*Vr(:, nb_c + 1 : end);
+        %% Y <- A^p*V
+        Y = A*Vr(:, nb_c+1:end);
+        for i = 1:p-1
+            Y = A*Y;
+        end
         
         %% orthogonalisation
-        Vr = mgs([Vc, Vnc]);
+        Vr = mgs([Vr(:, 1:nb_c) Y]);
         
         %% Projection de Rayleigh-Ritz
-        [Wr(nb_c+1:end), Vr(:,nb_c + 1 : end)] = rayleigh_ritz_projection(A, Vr(:,nb_c + 1 : end));
+        [Wr(nb_c+1:end), Vr(:, nb_c+1:end)] = rayleigh_ritz_projection(A, Vr(:,nb_c+1:end));
         
         %% Quels vecteurs ont convergé à cette itération
         analyse_cvg_finie = 0;
@@ -110,7 +112,7 @@ function [ W, V, n_ev, it, itv, flag ] = subspace_iter_v2( A, m, percentage, p, 
                         i = i + 1;
                     end
                 end
-            end 
+            end
         end
         
         % on met à jour le nombre de vecteurs ayant convergés

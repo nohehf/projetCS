@@ -41,4 +41,4 @@ eps = 1e-8;
 % nombre d'itérations max pour atteindre la convergence
 maxit = 10000;
 
-[W, V, flag] = eigen_2022(imat, n, v, m, eps, maxit, percentage, 40, genere);
+[W, V, flag] = eigen_2022(imat, n, v, m, eps, maxit, percentage, 60, genere);

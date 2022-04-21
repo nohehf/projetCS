@@ -49,6 +49,7 @@ function [ W, V, n_ev, it, itv, flag ] = subspace_iter_v2( A, m, percentage, p, 
     % on génère un ensemble initial de m vecteurs orthogonaux
     Vr = randn(n, m);
     Vr = mgs(Vr);
+    Wr = zeros(m,1);
 
     % rappel : conv = (eigsum >= trace) | (nb_c == m)
     while (~conv & k < maxit),
@@ -56,13 +57,12 @@ function [ W, V, n_ev, it, itv, flag ] = subspace_iter_v2( A, m, percentage, p, 
         k = k+1;
         %% Y <- A*V
         Vc = Vr(:, 1:nb_c);
-        Vnc = V
-        Y = A^p*Vr;
+        Vnc = A^p*Vr(:, nb_c + 1 : end);
         %% orthogonalisation
-        Vr = mgs(Y);
+        Vr = mgs([Vc, Vnc]);
         
         %% Projection de Rayleigh-Ritz
-        [Wr, Vr] = rayleigh_ritz_projection(A, Vr);
+        [Wr(nb_c+1:end), Vr(:,nb_c + 1 : end)] = rayleigh_ritz_projection(A, Vr(:,nb_c + 1 : end));
         
         %% Quels vecteurs ont convergé à cette itération
         analyse_cvg_finie = 0;
@@ -109,7 +109,7 @@ function [ W, V, n_ev, it, itv, flag ] = subspace_iter_v2( A, m, percentage, p, 
                         i = i + 1;
                     end
                 end
-            end
+            end 
         end
         
         % on met à jour le nombre de vecteurs ayant convergés
